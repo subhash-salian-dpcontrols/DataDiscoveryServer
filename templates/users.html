@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2 class="mb-4">👥 User Management</h2>
+
+<div class="card bg-secondary mb-4 shadow-sm">
+  <div class="card-header fw-bold">Create New User</div>
+  <div class="card-body">
+  <form method="post" action="/users/create" class="row g-3">
+      <div class="col-md-4">
+        <input type="text" class="form-control" name="username" placeholder="Username" required>
+      </div>
+      <div class="col-md-4">
+        <input type="password" class="form-control" name="password" placeholder="Password" required>
+      </div>
+      <div class="col-md-3">
+        <select class="form-select" name="role">
+          <option value="user">User</option>
+          <option value="admin">Admin</option>
+        </select>
+      </div>
+      <div class="col-md-1">
+        <button type="submit" class="btn btn-success w-100">➕</button>
+      </div>
+  </form>
+
+  <hr>
+
+  <div class="card-header fw-bold">Existing Users</div>  
+<table border="1" cellpadding="5">
+    <tr>
+      <th>Username</th>
+      <th>Role</th>
+      <th>Actions</th>
+    </tr>
+    {% for u in users %}
+    <tr>
+      <td>{{ u[0] }}</td>
+      <td>{{ u[1] }}</td>
+      <td>
+        <form action="/users/delete/{{ u[0] }}" method="post" style="display:inline;">
+          <button type="submit" class="btn btn-success" onclick="return confirm('Delete user {{u[1]}}?')">Delete</button>
+        </form>
+        <form action="/users/reset/{{ u[0] }}" method="post" style="display:inline;">
+          <input type="password" name="new_password" placeholder="New Password" required>
+          <button type="submit" class="btn btn-success" >Reset Password</button>
+        </form>
+      </td>
+    </tr>
+    {% endfor %}
+  </table>
+{% endblock %}

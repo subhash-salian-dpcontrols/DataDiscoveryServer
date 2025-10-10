@@ -1,0 +1,12 @@
+fastapi
+uvicorn
+jinja2
+sqlalchemy
+psycopg2-binary
+starlette
+passlib[argon2]
+python-multipart
+itsdangerous
+pandas
+openpyxl
+python-dotenv

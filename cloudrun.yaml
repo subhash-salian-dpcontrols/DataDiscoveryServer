@@ -1,0 +1,16 @@
+# Cloud Run service configuration
+service: data-discovery-server
+region: us-central1
+platform: managed
+
+env_variables:
+  POSTGRES_DB: pii_data
+  POSTGRES_USER: postgres
+  POSTGRES_PASSWORD: your-password-here
+  POSTGRES_HOST: your-cloud-sql-instance
+  POSTGRES_PORT: 5432
+  API_KEY: your-api-key-here
+
+# Connect to Cloud SQL instance
+cloudsql_instances:
+  - your-project:your-region:your-instance
