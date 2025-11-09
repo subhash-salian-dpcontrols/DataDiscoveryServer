@@ -14,7 +14,7 @@ A FastAPI-based web application for managing and visualizing PII (Personally Ide
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/yourusername/DataDiscoveryServer.git
+git clone https://github.com/subhash-salian-dpcontrols/DataDiscoveryServer.git
 cd DataDiscoveryServer
 ```
 
@@ -26,7 +26,7 @@ pip install -r requirements.txt
 3. Set up environment variables:
 ```bash
 API_KEY=your_api_key
-DATABASE_URL=postgresql://username:password@localhost:5432/pii_data
+DATABASE_URL=postgresql://postgres:Submax@2206@localhost:5432/pii_data
 ```
 
 4. Initialize the database:
