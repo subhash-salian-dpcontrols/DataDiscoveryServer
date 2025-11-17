@@ -6,7 +6,7 @@ services:
     branch: main
     plan: starter            # choose plan (starter/free/standard)
     buildCommand: pip install -r requirements.txt
-    startCommand: gunicorn -k uvicorn.workers.UvicornWorker DataDiscoveryServer:app --bind 0.0.0.0:$PORT
+    startCommand: uvicorn DataDiscoveryServer:app --host 0.0.0.0 --port $PORT
     envVars:
       - key: API_KEY
         value: supersecretkey123
