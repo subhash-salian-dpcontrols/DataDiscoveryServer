@@ -4,7 +4,7 @@ services:
     env: python
     region: oregon            # change region if desired
     branch: main
-    plan: starter            # choose plan (starter/free/standard)
+    plan: free            # choose plan (starter/free/standard)
     buildCommand: pip install -r requirements.txt
     startCommand: uvicorn DataDiscoveryServer:app --host 0.0.0.0 --port $PORT
     envVars:
