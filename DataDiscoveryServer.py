@@ -16,6 +16,7 @@ from db import (
 from db import connection_pool
 
 from typing import List
+from contextlib import asynccontextmanager
 
 class PiiRecord(BaseModel):
     hostname: str
@@ -33,19 +34,9 @@ import time
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-app = FastAPI()
-
-# Add CORS middleware for Cloud Run
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["*"],  # Adjust this in production
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
-
-@app.on_event("startup")
-async def startup_event():
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    # Startup event
     logger.info("Starting up application")
     try:
         # Wait for database to be ready
@@ -67,13 +58,25 @@ async def startup_event():
         logger.error(f"Failed to initialize database: {str(e)}")
         # Don't raise the exception, just log it
         pass
-
-@app.on_event("shutdown")
-async def shutdown_event():
+    
+    yield
+    
+    # Shutdown event
     logger.info("Shutting down application")
     # Clean up any remaining connections
     if 'connection_pool' in globals():
         connection_pool.closeall()
+
+app = FastAPI(lifespan=lifespan)
+
+# Add CORS middleware for Cloud Run
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Adjust this in production
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 app.add_middleware(SessionMiddleware, secret_key="super-secret-key")
 API_KEY = os.getenv("API_KEY", "supersecretkey123")

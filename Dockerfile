@@ -21,7 +21,7 @@ RUN apt-get update && apt-get install -y \
 # Copy application code and templates
 COPY . .
 
-# Create directories for templates and static files
+# Create directories if they don't exist
 RUN mkdir -p templates static
 
 # Set environment variables
@@ -32,5 +32,5 @@ ENV DATABASE_URL=postgresql://postgres:postgres@db:5432/pii_data
 # Expose the port
 EXPOSE 8000
 
-# Command to run the server
-CMD ["uvicorn", "DataDiscoveryServer:app", "--host", "0.0.0.0", "--port", "8000"]
+# Change the CMD to use python -m
+CMD ["python", "-m", "uvicorn", "DataDiscoveryServer:app", "--host", "0.0.0.0", "--port", "8000"]

@@ -49,7 +49,7 @@ def main():
         print("Initializing database...")
         init_db()
         print("Creating admin user...")
-        create_user('Admin', 'Admin@123', 'admin')
+        #create_user('Admin', 'Admin@123', 'admin')
         print("Inserting sample data...")
         insert_sample_data()
         print("Database initialization completed successfully!")
